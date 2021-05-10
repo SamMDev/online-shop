@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/delievery_system?serverTimezone=UTC
+    username: root
+    password:
+
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+
+  application:
+    name: order-service
+
+server:
+  port: 8081
+

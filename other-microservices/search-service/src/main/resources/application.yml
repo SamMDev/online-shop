@@ -1,0 +1,9 @@
+server:
+  port: 8084
+
+connection:
+  url:
+    product-service: http://localhost:8082/product/
+
+application:
+  name: search-service

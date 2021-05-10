@@ -1,0 +1,11 @@
+server:
+  port: 8085
+
+connection:
+  url:
+    product-service: http://localhost:8082/product/
+    order-service: http://localhost:8081/order/
+    customer-service: http://localhost:8083/customer/
+
+application:
+  name: order-process-service
