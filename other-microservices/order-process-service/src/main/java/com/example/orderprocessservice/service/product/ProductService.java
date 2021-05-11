@@ -70,6 +70,11 @@ public class ProductService {
     }
 
 
+    /**
+     * For each product id (key) in map, it subtracts its amount (value)
+     *
+     * @param mapped    Map Product Id : Amount to subtract
+     */
     public void subtractProductAvailability(
             Map<String, Long> mapped
     ){

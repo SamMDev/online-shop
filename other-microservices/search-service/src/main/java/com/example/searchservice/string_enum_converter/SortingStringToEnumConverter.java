@@ -1,6 +1,7 @@
 package com.example.searchservice.string_enum_converter;
 
 import com.example.searchservice.enums.Sorting;
+import com.example.searchservice.exceptions.NotAllowedOperationException;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,11 @@ public class SortingStringToEnumConverter implements Converter<String, Sorting> 
         try{
             return Sorting.valueOf(source.toUpperCase());
         }catch (IllegalArgumentException e){
-            return null;
+
+            throw new NotAllowedOperationException(
+                    "Could not convert " + source + " to sorting mode"
+            );
+
         }
     }
 }

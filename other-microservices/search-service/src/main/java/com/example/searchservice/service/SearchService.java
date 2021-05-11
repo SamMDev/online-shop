@@ -2,6 +2,7 @@ package com.example.searchservice.service;
 
 import com.example.searchservice.api.dto.ProductDto;
 import com.example.searchservice.enums.Sorting;
+import com.example.searchservice.exceptions.NotAllowedOperationException;
 import com.example.searchservice.service.product_service.ProductService;
 import com.example.searchservice.string_enum_converter.SortingStringToEnumConverter;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -84,8 +85,11 @@ public class SearchService {
                     .sorted(Comparator.comparing(ProductDto::getPrice).reversed())
                     .collect(Collectors.toList());
         }
+
         // if user does not select low or high
-        return null;
+        throw new NotAllowedOperationException(
+                "Could not convert " + mode + " to sorting mode"
+        );
     }
 
 

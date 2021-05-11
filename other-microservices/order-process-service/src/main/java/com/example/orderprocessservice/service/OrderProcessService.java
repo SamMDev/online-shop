@@ -4,6 +4,7 @@ import com.example.orderprocessservice.api.dto.CustomerDto;
 import com.example.orderprocessservice.api.dto.FormDto;
 import com.example.orderprocessservice.api.dto.OrderDto;
 import com.example.orderprocessservice.api.dto.ProductDto;
+import com.example.orderprocessservice.exceptions.ResourceNotFoundException;
 import com.example.orderprocessservice.service.customer.CustomerService;
 import com.example.orderprocessservice.service.order.OrderService;
 import com.example.orderprocessservice.service.product.ProductService;
@@ -51,7 +52,9 @@ public class OrderProcessService {
              */
             productDto = productService.getProductById(entry.getKey());
 
-            payment += productDto.getPrice()*entry.getValue();
+            payment +=
+                    productDto.getPrice()       // price of the product
+                            * entry.getValue(); // amount of a product
         }
 
         return payment;
@@ -66,7 +69,9 @@ public class OrderProcessService {
         return
                 productsInBasket.stream()
                         .collect(Collectors.groupingBy(
+                                // for each element
                                 (element -> element),
+                                // counts its occurrence in list
                                 Collectors.counting()
                         ));
     }
@@ -78,9 +83,14 @@ public class OrderProcessService {
      * @param id    product id
      */
     public void addToBasket(String id){
-        if(productService.existsById(id)){
-            productsInBasket.add(id);
-        }
+
+        if(!productService.existsById(id))
+            throw new ResourceNotFoundException(
+                    "Product with given id " + id + " can not be added to basket\n" +
+                            "No product with such id"
+            );
+
+        productsInBasket.add(id);
     }
 
     /**
